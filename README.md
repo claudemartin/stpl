@@ -15,9 +15,16 @@ So each set contains only two elements and they represent a pair of _line number
 ZF is simply this: `S(n) = n ∪ {n}`   
 The other could be: `S(n) = {n}` 
 
-Then only 0 and 1 would be the same. 2 would contain the empty set or not. With the empty set it's ZF (a value) and without the empty set it's just for ordering.
+Then only 0 and 1 would be the same. Each element would contain the empty set or not. With the empty set it's ZF (a value) and without the empty set it's just for ordering.
 
-The language doesn't care what brackets are used. `([{<` are all the same. Anything else is just a comment (including command and whitespace.
+`ZF = { {}, {{}}, {{}, {{}}}, {{}, {{}}, {{}, {{}}}} ... }`  
+`LN = { {{{}}}, {{{{}}}}, {{{{{}}}}}, ... }`   
+`C = { { ln, v } : ln ∉ LN; zv ∈ ZF }`   
+`P = { t : t ∉ ℙ(C); 0 < |t| < ∞ }`    
+
+`C` is the infinite set of all possible tuples. The Turing machine can load any element of `P`, which is a non-empty, finite set of tuples. However, it is not guaranteed that the code can be executed. The grammar is easy, as it's just some instruction set.
+
+The parser doesn't care what brackets are used. `([{<` are all the same. Anything else is just a comment (including command and whitespace.
 
 Example code:   
 `{ [((())) , ((), (()), ((), (()))) ] , [ (((()))) , ((), (()), ((), (())), ((), (()), ((), (())))) ] }`
