@@ -20,7 +20,9 @@ Then only 0 and 1 would be the same. 2 would contain the empty set or not. With 
 The language doesn't care what brackets are used. `([{<` are all the same. Anything else is just a comment (including command and whitespace.
 
 Example code:   
-`{ [((())) , ((), (()), ((), (()))) ] , [[(((()))) , ((), (()), ((), (())), ((), (()), ((), (())))) ]] }`
+`{ [((())) , ((), (()), ((), (()))) ] , [ (((()))) , ((), (()), ((), (())), ((), (()), ((), (())))) ] }`
+
+This would simply load `3, 4` as the program. `3` could be an instruction and `4` could be the argument. 
 
 ## runtime
 
