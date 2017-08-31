@@ -19,8 +19,8 @@ Then only 0 and 1 would be the same. Each element would contain the empty set or
 
 `ZF = { {}, {{}}, {{}, {{}}}, {{}, {{}}, {{}, {{}}}} ... }`  
 `LN = { {{{}}}, {{{{}}}}, {{{{{}}}}}, ... }`   
-`C = { { ln, v } : ln ∉ LN; zv ∈ ZF }`   
-`P = { t : t ∉ ℙ(C); 0 < |t| < ∞ }`    
+`C = { { ln, zf } : ln ∈ LN; zf ∈ ZF }`   
+`P = { t : t ∈ ℙ(C); 0 < |t| < ∞ }`    
 
 `C` is the infinite set of all possible tuples. The Turing machine can load any element of `P`, which is a non-empty, finite set of tuples. However, it is not guaranteed that the code can be executed. The grammar is easy, as it's just some instruction set.
 
