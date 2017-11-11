@@ -15,9 +15,9 @@ So each set contains only two elements and they represent a pair of _line number
 ZF is simply this: S<sub>1</sub>(n) = n ∪ {n}   
 The other could be: S<sub>2</sub>(n) = {n} 
 
-And when we need the predecessor:
-P<sub>1</sub>(n) = n \ max(n) 
-P<sub>2</sub>(n) = x | x ∈ n
+And when we need the predecessor:  
+P<sub>1</sub>(n) = n \ max(n) // max :  element of set with hightest cardinality
+P<sub>2</sub>(n) = x : x ∈ n 
 
 Then only 0 and 1 would be the same. Each element would contain the empty set or not. With the empty set it's ZF (a value) and without the empty set it's just for ordering.
 
