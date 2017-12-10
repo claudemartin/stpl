@@ -1,6 +1,8 @@
 # stpl
 set-theoretic platform
 
+## wiki
+You can find more information in our [wiki](https://github.com/claudemartin/stpl/wiki).
 
 ## language
 
