@@ -11,10 +11,14 @@ public class GeneralSet implements StplSet {
 
 	public static GeneralSet EMPTY = new GeneralSet();
 
-	public static GeneralSet of(StplSet... members) {
-		if (members.length == 0)
+	public static GeneralSet containing(StplSet... members) {
+		return of(Arrays.asList(members));
+	}
+	
+	public static GeneralSet of(Collection<StplSet> members) {
+		if (members.size() == 0)
 			return EMPTY;
-		return new GeneralSet(Arrays.asList(members));
+		return new GeneralSet(members);
 	}
 
 	private final StplSet[] members;
@@ -54,14 +58,12 @@ public class GeneralSet implements StplSet {
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
 		if (obj instanceof StplSet) {
 			if (obj instanceof GeneralSet) {
 				GeneralSet other = (GeneralSet) obj;
 				return Arrays.equals(this.members, other.members);
 			} else {
 				StplSet other = (StplSet) obj;
-
 				return StplSet.compare(this, other) == 0;
 			}
 		}
@@ -75,8 +77,7 @@ public class GeneralSet implements StplSet {
 
 	@Override
 	public int compareTo(StplSet o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return StplSet.compare(this, o);
 	}
 
 }

@@ -1,8 +1,11 @@
 package com.github.claudemartin.stpl.set;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.StringJoiner;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 /**
@@ -119,14 +122,19 @@ public interface StplSet extends Iterable<StplSet>, Comparable<StplSet> {
 		set.generateTokens(c -> sb.append(c), 0);
 		return sb.toString();
 	}
-	
+
 	public static int compare(StplSet a, StplSet b) {
+		requireNonNull(a, "a");
+		requireNonNull(b, "b");
+		if (a == b)
+			return 0;
 		long sizeA = a.size();
 		long sizeB = b.size();
-		if(sizeA != sizeB)
+		if (sizeA != sizeB)
 			return Long.compare(sizeA, sizeB);
 		// The empty set is equal to itself.
-		if(sizeA == 0) return 0;
+		if (sizeA == 0)
+			return 0;
 		// compare low to high:
 		Iterator<StplSet> itA = a.iterator();
 		Iterator<StplSet> itB = b.iterator();
@@ -134,9 +142,54 @@ public interface StplSet extends Iterable<StplSet>, Comparable<StplSet> {
 			StplSet mA = itA.next();
 			StplSet mB = itB.next();
 			int comparison = compare(mA, mB);
-			if(comparison != 0)
+			if (comparison != 0)
 				return comparison;
 		}
 		return 0;
 	}
+
+	/** Returns a set with all elements of <code>this</code> or the given set. */
+	public default StplSet union(StplSet set) {
+		if (this == set)
+			return this;
+		if (this.isEmpty())
+			return set;
+		if (set.isEmpty())
+			return this;
+		// There's a much better way for doing this:
+		// Create an iterator each and then add all members to a simple ArrayList.
+		// But always the one with the lower value.
+
+		TreeSet<StplSet> members = new TreeSet<>();
+		this.forEach(members::add);
+		set.forEach(members::add);
+		return GeneralSet.of(members);
+	}
+	
+	/** Returns a set with all elements of <code>this</code>, which are also in the given set. */
+	public default StplSet intersect(StplSet set) {
+		if (set.isEmpty() || this.isEmpty())
+			return this;
+		if (this == set)
+			return this;
+		// There is a better way. See union.
+		TreeSet<StplSet> members = new TreeSet<>();
+		this.forEach(s -> {
+			if (set.contains(s))
+				members.add(s);
+		});
+		return GeneralSet.of(members);
+	}
+
+	/** Returns a set with all elements of <code>this</code>, which aren't in the given set. */
+	public default StplSet minus(StplSet set) {
+		if (set.isEmpty() || this.isEmpty() || this == set)
+			return this;
+		// There is a better way. See union.
+		TreeSet<StplSet> members = new TreeSet<>();
+		this.forEach(members::add);
+		set.forEach(members::remove);
+		return GeneralSet.of(members);
+	}
+
 }

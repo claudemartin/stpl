@@ -48,7 +48,7 @@ public class IndexSet implements ValueSet {
 					throw new NoSuchElementException();
 				next = -1;
 				if (_next == 1) { // 1 := {{}}
-					return GeneralSet.of(GeneralSet.EMPTY);
+					return GeneralSet.containing(GeneralSet.EMPTY);
 				}
 				return of(_next);
 			}
@@ -68,8 +68,7 @@ public class IndexSet implements ValueSet {
 	@Override
 	public boolean contains(StplSet set) {
 		if (set instanceof IndexSet) {
-			// each ordinal contains all smaller ordinals.
-			return ((IndexSet) set).value < this.value;
+			return ((IndexSet) set).value == this.value -1;
 		}
 		for (StplSet member : this) {
 			if (member.equals(set))
