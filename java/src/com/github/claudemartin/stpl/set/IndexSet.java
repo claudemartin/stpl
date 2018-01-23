@@ -7,11 +7,10 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.TreeMap;
 
-/**
- * Set-theoretic definition of natural numbers as nested sets starting at
- * ordinal 2. This is used for sequences where an index is needed that can be
- * distinguished from {@link ZFSet}.
- */
+/** Set-theoretic definition of natural numbers as nested sets starting at ordinal 2. This is used for sequences where an index is needed
+ * that can be distinguished from {@link ZFSet}.
+ *
+ * @author Claude Martin */
 public class IndexSet implements ValueSet {
 
 	private final long value;
@@ -21,32 +20,32 @@ public class IndexSet implements ValueSet {
 	public static final IndexSet TWO = of(2L);
 	public static final IndexSet THREE = of(3L);
 
-	public static IndexSet of(long value) {
+	public static IndexSet of(final long value) {
 		if (value < 2)
 			throw new IllegalArgumentException("Indizes have to start at 2.");
 		return CACHE.computeIfAbsent(value, IndexSet::new);
 	}
 
-	private IndexSet(long value) {
+	private IndexSet(final long value) {
 		this.value = value;
 	}
 
 	@Override
 	public Iterator<StplSet> iterator() {
 		return new Iterator<StplSet>() {
-			long next = value - 1;
+			long next = IndexSet.this.value - 1;
 
 			@Override
 			public boolean hasNext() {
-				return next > 0;
+				return this.next > 0;
 			}
 
 			@Override
 			public StplSet next() {
-				long _next = next;
+				final long _next = this.next;
 				if (_next < 0)
 					throw new NoSuchElementException();
-				next = -1;
+				this.next = -1;
 				if (_next == 1) { // 1 := {{}}
 					return GeneralSet.containing(GeneralSet.EMPTY);
 				}
@@ -62,15 +61,15 @@ public class IndexSet implements ValueSet {
 	 */
 	@Override
 	public long toLong() {
-		return value;
+		return this.value;
 	}
 
 	@Override
-	public boolean contains(StplSet set) {
+	public boolean contains(final StplSet set) {
 		if (set instanceof IndexSet) {
 			return ((IndexSet) set).value == this.value -1;
 		}
-		for (StplSet member : this) {
+		for (final StplSet member : this) {
 			if (member.equals(set))
 				return true;
 		}
@@ -90,16 +89,16 @@ public class IndexSet implements ValueSet {
 	public Optional<IndexSet> predecessor() {
 		if (this.value == 2)
 			return Optional.empty();
-		return Optional.of(of(value - 1));
+		return Optional.of(of(this.value - 1));
 	}
 
 	@Override
 	public IndexSet successor() {
-		return of(1 + value);
+		return of(1 + this.value);
 	}
 
 	@Override
-	public boolean equals(StplSet other) {
+	public boolean equals(final StplSet other) {
 		if (other == null)
 			return false;
 		if (this == other)
@@ -117,11 +116,11 @@ public class IndexSet implements ValueSet {
 
 	@Override
 	public int hashCode() {
-		return (int) (Long.hashCode(value) ^ -1L);
+		return (int) (Long.hashCode(this.value) ^ -1L);
 	}
 
 	@Override
-	public int compareTo(StplSet other) {
+	public int compareTo(final StplSet other) {
 		requireNonNull(other, "other");
 		if (other instanceof IndexSet) {
 			return Long.compare(this.toLong(), ((IndexSet) other).toLong());

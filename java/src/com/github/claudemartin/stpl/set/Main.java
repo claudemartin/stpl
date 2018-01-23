@@ -3,7 +3,7 @@ package com.github.claudemartin.stpl.set;
 import java.util.concurrent.atomic.LongAdder;
 
 public class Main {
-	public static void main(String... arg) {
+	public static void main(final String... arg) {
 //		System.out.println(Long.hashCode(-1) ^-1L);
 //		System.out.println(Long.hashCode(0L) );
 //		System.out.println(Long.hashCode(-1L) );
@@ -15,8 +15,8 @@ public class Main {
 		
 //		
 		for (int x = 0; x < 10; x++) {
-			ZFSet set = ZFSet.of(x);
-			LongAdder i = new LongAdder();
+			final ZFSet set = ZFSet.of(x);
+			final LongAdder i = new LongAdder();
 			set.generateTokens(c -> {
 				//System.out.print(c);
 				i.increment();

@@ -7,15 +7,18 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+/** Base class for {@link StplSet}.
+ * 
+ * @author Claude Martin */
 public class GeneralSet implements StplSet {
 
 	public static GeneralSet EMPTY = new GeneralSet();
 
-	public static GeneralSet containing(StplSet... members) {
+	public static GeneralSet containing(final StplSet... members) {
 		return of(Arrays.asList(members));
 	}
-	
-	public static GeneralSet of(Collection<StplSet> members) {
+
+	public static GeneralSet of(final Collection<StplSet> members) {
 		if (members.size() == 0)
 			return EMPTY;
 		return new GeneralSet(members);
@@ -24,14 +27,14 @@ public class GeneralSet implements StplSet {
 	private final StplSet[] members;
 
 	private GeneralSet() {
-		members = new StplSet[0];
+		this.members = new StplSet[0];
 	}
 
-	private GeneralSet(Collection<StplSet> members) {
-		this.members = makeMembersArray(members);
+	private GeneralSet(final Collection<StplSet> members) {
+		this.members = this.makeMembersArray(members);
 	}
 
-	private StplSet[] makeMembersArray(Collection<StplSet> c) {
+	private StplSet[] makeMembersArray(final Collection<StplSet> c) {
 		if (c.isEmpty())
 			return EMPTY.members;
 
@@ -46,24 +49,24 @@ public class GeneralSet implements StplSet {
 	}
 
 	@Override
-	public boolean contains(StplSet set) {
+	public boolean contains(final StplSet set) {
 		requireNonNull(set, "set");
-		return 0 <= Arrays.binarySearch(members, set, StplSet::compare);
+		return 0 <= Arrays.binarySearch(this.members, set, StplSet::compare);
 	}
 
 	@Override
 	public long size() {
-		return members.length;
+		return this.members.length;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj instanceof StplSet) {
 			if (obj instanceof GeneralSet) {
-				GeneralSet other = (GeneralSet) obj;
+				final GeneralSet other = (GeneralSet) obj;
 				return Arrays.equals(this.members, other.members);
 			} else {
-				StplSet other = (StplSet) obj;
+				final StplSet other = (StplSet) obj;
 				return StplSet.compare(this, other) == 0;
 			}
 		}
@@ -72,11 +75,11 @@ public class GeneralSet implements StplSet {
 
 	@Override
 	public int hashCode() {
-		return Arrays.hashCode(members);
+		return Arrays.hashCode(this.members);
 	}
 
 	@Override
-	public int compareTo(StplSet o) {
+	public int compareTo(final StplSet o) {
 		return StplSet.compare(this, o);
 	}
 
